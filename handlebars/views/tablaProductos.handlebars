@@ -1,7 +1,7 @@
 <div class="container" style="background: rgb(174, 203, 214);">
     <div class="jumbotron" style="height:100vh">
         <h1 style="color:blue">VISTA DE PRODUCTOS</h1>
-        {{#if productos}}
+        {{#if data}}
         <div class="table-responsive">
             <table class="table table-dark" style="text-align: center;">
                 <tr style="color:white;">
@@ -9,7 +9,7 @@
                     <th>PRECIO</th>
                     <th>IMAGEN</th>
                 </tr>
-                {{#each productos}}
+                {{#each data}}
                 <tr>
                     <td>
                         {{this.title}}

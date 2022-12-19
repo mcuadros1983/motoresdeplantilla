@@ -1,6 +1,8 @@
 const express = require("express")
 const app = express()
 const { engine } = require('express-handlebars')
+const Contenedor = require("./Contenedor")
+const producto = new Contenedor("producto")
 
 
 app.engine("handlebars", engine())
@@ -12,16 +14,22 @@ app.get("/", (req, res) => {
     res.render('formProductos')//se renderiza el archivo base de estructura mas los datos de la constante
 })
 
-let productos = []
-
-app.post("/productos", (req,res)=>{
-    productos.push(req.body)
-    res.redirect("/")
-})  
+app.post("/productos", (req, res) => {
+    producto
+        .save(req.body)
+        .then(() => res.redirect("/"))
+        .catch((error) => {
+            res.send({ error: error.message })
+        })
+})
 
 app.get('/productos', (req, res) => {
-    console.log(productos)
-    res.render('tablaProductos', {productos})//se renderiza el archivo base de estructura mas los datos de la constante
+    producto
+        .getAll()
+        .then((data) => res.render('tablaProductos', { data }))
+        .catch((error) => {
+            res.send({ error: error.message })
+        })
 })
 
 const PORT = 8080
